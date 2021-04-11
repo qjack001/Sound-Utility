@@ -126,7 +126,7 @@
 	{
 		max-width: 75ch;
 		height: auto;
-		padding: 60px 20px;
+		padding: 80px 20px;
 		margin: auto;
 	}
 
@@ -137,7 +137,7 @@
 		grid-template-rows: 100px auto;
 
 		max-width: 300px;
-		margin: 25vh auto 0;
+		margin: 20vh auto 0;
 	}
 
 	svg
