@@ -1,14 +1,14 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { createApp } from 'vue'
+import { seedrandom } from 'seedrandom'
+import FocusVisible from 'vue-focus-visible'
 
-import App from './App.vue';
-import routes from './routes';
+import App from './App.vue'
+import router from './routes'
 
-Vue.use(VueRouter);
-const router = new VueRouter({mode: 'history', routes});
+const app = createApp(App)
 
-new Vue(
-{
-	router,
-	render: h => h(App)
-}).$mount('#page');
+app.use(router)
+app.use(seedrandom)
+app.use(FocusVisible)
+
+app.mount('#page')

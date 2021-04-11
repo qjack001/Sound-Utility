@@ -1,12 +1,19 @@
+import { createWebHistory, createRouter } from 'vue-router';
+
 import Home from './pages/Home.vue';
-import Notebook from './pages/Notebook.vue';
 import Error from './pages/404.vue';
+
+import LeftCenterRandom from './pages/left-center-random/LeftCenterRandom.vue';
 
 const routes = [
 	{ path: '/', component: Home },
-	{ path: '/book/:number', component: Notebook },
-	{ path: '/file/*' },
-	{ path: "*", component: Error, name: '404' },
+	{ path: '/lcr', component: LeftCenterRandom },
+	{ path: '/:pathMatch(.*)*', name: '404', component: Error }
 ];
 
-export default routes;
+const router = createRouter({
+	history: createWebHistory(),
+	routes
+});
+
+export default router;
