@@ -115,6 +115,10 @@
 			const panChords = randArrangment[3]
 
 			return { melody, chords, bass, drums, panDrums, panBass, panMelody, panChords }
+		},
+		created () 
+		{
+			document.title = "LCRand Sound Utility";
 		}
 	}
 </script>

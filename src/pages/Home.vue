@@ -17,10 +17,6 @@
 		components:
 		{
 			SiteHeader
-		},
-		created () 
-		{
-			document.title = "Bookplate";
 		}
 	}
 </script>
