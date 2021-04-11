@@ -40,7 +40,7 @@
 	{
 		max-width: 60ch;
 		margin: 0 auto;
-		padding: 0 20px;
+		padding: 0 40px;
 	}
 
 	::selection

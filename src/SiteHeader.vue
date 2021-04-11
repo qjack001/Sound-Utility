@@ -28,6 +28,7 @@
 		text-decoration: none;
 		outline: none;
 		color: inherit;
+		padding: 30px;
 	}
 
 	#logo
@@ -41,7 +42,7 @@
 		height: 15px;
 		border-radius: 15px 15px 0 0;
 
-		margin: 15px 30px;
+		margin: 30px 25px 0 10px;
 	}
 
 	.inverted #logo
@@ -53,7 +54,7 @@
 	#wordmark
 	{
 		display: inline-block;
-		transform: translateY(-17px);
+		transform: translateY(-2px);
 
 		font-weight: bold;
 		line-height: 1;
