@@ -153,11 +153,52 @@
 				selected: '',
 				keyType: 'maj'
 			})
+
+			const urlParams = new URLSearchParams(window.location.search);
+			
+			// get settings from url
+			if (urlParams.has('key'))
+			{
+				data['keyType'] = urlParams.get('key')
+			}
+
+			if (urlParams.has('prog'))
+			{
+				let urlChords = urlParams.get('prog')
+				for (let i = 0; i < urlChords.length - 2; i+=3) 
+				{
+					let newChord = { name: '...', id: ('chord-' + Math.random().toString(36).substr(2, 10)) }
+
+					if (urlChords.charCodeAt(i) - 64 > 0)
+					{
+						newChord['root'] = urlChords.charCodeAt(i) - 64;
+					}
+					if (urlChords.charCodeAt(i+1) - 64 > 0)
+					{
+						newChord['third'] = urlChords.charCodeAt(i+1) - 64;
+					}
+					if (urlChords.charCodeAt(i+2) - 64 > 0)
+					{
+						newChord['top'] = urlChords.charCodeAt(i+2) - 64;
+					}
+					
+					data['chords'].push(newChord)
+				}
+			}
+
+			// otherwise, create empty first chord
+			if (data['chords'].length < 1)
+			{
+				data['chords'].push({ name: '...', id: ('chord-' + Math.random().toString(36).substr(2, 10))})
+			}
+
 			return { data }
 		},
 		created ()
 		{
 			document.title = "Simple Progression Sound Utility";
+			this.data['chords'].forEach(this.nameChord)
+			this.selectChord(this.data['chords'][0])
 		},
 		methods:
 		{
@@ -170,6 +211,7 @@
 
 				this.data['chords'].push(chord)
 				this.selectChord(chord)
+				this.updateUrl()
 			},
 			selectChord(chord)
 			{
@@ -179,21 +221,48 @@
 			{
 				this.data['selected'].root = index
 				this.nameChord(this.data['selected'])
+				this.updateUrl()
 			},
 			setThird(index)
 			{
 				this.data['selected'].third = index
 				this.nameChord(this.data['selected'])
+				this.updateUrl()
 			},
 			setTop(index)
 			{
 				this.data['selected'].top = index
 				this.nameChord(this.data['selected'])
+				this.updateUrl()
 			},
 			setKey(newKey)
 			{
 				this.data['keyType'] = newKey
 				this.data['chords'].forEach(this.nameChord)
+				this.updateUrl()
+			},
+			updateUrl()
+			{
+				const url = new URL(window.location.href);
+				let chordString = ''
+
+				for (let i = 0; i < this.data['chords'].length; i++)
+				{
+					let chord = this.data['chords'][i]
+
+					if (chord.root) { chordString += String.fromCharCode(chord.root + 64) }
+					else { chordString += '0' }
+
+					if (chord.third) { chordString += String.fromCharCode(chord.third + 64) }
+					else { chordString += '0' }
+
+					if (chord.top) { chordString += String.fromCharCode(chord.top + 64) }
+					else { chordString += '0' }
+				}
+
+				url.searchParams.set('key', this.data['keyType']);
+				url.searchParams.set('prog', chordString);
+				window.history.replaceState(null, null, url);
 			},
 			deleteCurrent()
 			{
@@ -217,6 +286,8 @@
 				{
 					this.selectChord(this.data['chords'][index - 1])
 				}
+
+				this.updateUrl()
 			},
 			nameChord(chord)
 			{
@@ -333,19 +404,21 @@
 		margin: 60px 40px 20px;
 	}
 
+	input.fret, input.chord-tab, #controls input
+	{
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		border: none;
+		width: 0;
+		height: 0;
+		opacity: 0;
+	}
+
 	#progression
 	{
 		min-height: 32px;
-		margin: 40px 32px 0;
-	}
-
-	input.chord-tab
-	{
-		opacity: 0;
-		width: 0px;
-		height: 0px;
-		box-sizing: border-box;
-		display: inline-block;
+		margin: 40px 40px 0;
 	}
 
 	label.chord-tab
@@ -353,6 +426,7 @@
 		cursor: pointer;
 		display: inline-block;
 		background: var(--white-70);
+		margin: 4px 8px 4px 0;
 		width: 80px;
 		border-radius: 6px;
 
@@ -369,7 +443,7 @@
 	#add-chord
 	{
 		cursor: pointer;
-		margin-left: 10px;
+		margin-left: 8px;
 		font-size: 20px;
 		line-height: 20px;
 		text-align: center;
@@ -401,16 +475,6 @@
 	{
 		height: 52px;
 		width: 1300px;
-	}
-
-	input.fret, #controls input
-	{
-		display: inline-block;
-		margin: 0;
-		padding: 0;
-		border: none;
-		width: 0;
-		height: 0;
 	}
 
 	label.fret
