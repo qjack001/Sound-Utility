@@ -124,8 +124,6 @@
 </script>
 
 <style scoped>
-
-
 	#info
 	{
 		max-width: 75ch;
