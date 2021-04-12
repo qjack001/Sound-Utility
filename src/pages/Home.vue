@@ -17,6 +17,13 @@
 		components:
 		{
 			SiteHeader
+		},
+		created()
+		{
+			const url = new URL(window.location.href);
+			url.searchParams.delete('key');
+			url.searchParams.delete('prog');
+			window.history.replaceState(null, null, url);
 		}
 	}
 </script>
