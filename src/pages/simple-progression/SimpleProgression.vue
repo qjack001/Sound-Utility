@@ -132,6 +132,8 @@
 			<label for="none-key-selector">
 				None
 			</label>
+
+			<button id="delete-chord" @click="deleteCurrent()">Delete</button>
 		</section>
 	</main>
 </template>
@@ -188,6 +190,34 @@
 				this.data['selected'].top = index
 				this.nameChord(this.data['selected'])
 			},
+			setKey(newKey)
+			{
+				this.data['keyType'] = newKey
+				this.data['chords'].forEach(this.nameChord)
+			},
+			deleteCurrent()
+			{
+				let index = this.data['chords'].indexOf(this.data['selected'])
+
+				if (index == -1 || this.data['chords'].length <= 1)
+				{
+					// no-op; don't delete last chord, just reset
+					this.data['chords'][0] = { name: '...', id: ('chord-' + Math.random().toString(36).substr(2, 10)) }
+					this.selectChord(this.data['chords'][0])
+					return;
+				}
+
+				this.data['chords'].splice(index, 1)
+
+				if (index == 0)
+				{
+					this.selectChord(this.data['chords'][0])
+				}
+				else
+				{
+					this.selectChord(this.data['chords'][index - 1])
+				}
+			},
 			nameChord(chord)
 			{
 				let rootNote = chord.root
@@ -213,6 +243,13 @@
 
 				let rootName = ['VII', 'I', 'II', 'III', 'IV', 'V', 'VI'][((scaleDegree + 1) % 7)]
 				let major = true
+
+				// not using a key
+				if (this.data['keyType'] == 'none')
+				{
+					rootName = 'm'
+					prefix = ''
+				}
 
 				// check if major or minor
 				if (thirdNote == rootNote)
@@ -466,6 +503,12 @@
 		border-bottom: 1px solid var(--background);
 	}
 
+	#controls
+	{
+		margin: 40px;
+		width: calc(100% - 80px);
+		max-width: 1302px;
+	}
 
 	#controls label
 	{
@@ -475,6 +518,10 @@
 		
 		width: 60px;
 		text-align: center;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 2;
 	}
 
 	#controls label:first-of-type
@@ -487,5 +534,38 @@
 	{
 		border-radius: 0 6px 6px 0;
 		border: 2px solid var(--foreground);
+	}
+
+	#controls input:checked + label
+	{
+		background: var(--foreground);
+		color: var(--background);
+	}
+
+	#delete-chord
+	{
+		display: inline-block;
+		float: right;
+		cursor: pointer;
+		border: 2px solid var(--accent);
+		
+		width: 10ch;
+		text-align: center;
+
+		color: var(--accent);
+		background: var(--background);
+
+		font-family: "webfont";
+		font-weight: bold;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 2;
+	}
+
+	#delete-chord:hover
+	{
+		color: var(--background);
+		background: var(--accent);
 	}
 </style>
