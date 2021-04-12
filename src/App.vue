@@ -37,6 +37,11 @@
 		line-height: 1.45;
 	}
 
+	a, input, label, button
+	{
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+	}
+
 	::selection
 	{
 		background: var(--accent);
