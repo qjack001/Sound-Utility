@@ -12,6 +12,7 @@
 		--background: rgb(208, 202, 196);
 		--foreground: rgb(42, 40, 43);
 		--accent:     rgb(235, 95, 44);
+		--white-70: rgba(255, 255, 255, 0.7);
 	}
 
 	html, body

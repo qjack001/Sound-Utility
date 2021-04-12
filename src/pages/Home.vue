@@ -5,7 +5,7 @@
 		<h2>Tools:</h2>
 		<ul>
 			<li><router-link to='lcr'>Left Center Random</router-link></li>
-			<!-- <li><router-link to='lcr'>Simple Progression</router-link></li> -->
+			<li><router-link to='chords'>Simple Progression</router-link></li>
 		</ul>
 	</main>
 </template>
