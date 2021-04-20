@@ -415,6 +415,12 @@
 		opacity: 0;
 	}
 
+	/* hack/fix for firefox */
+	@supports (-moz-appearance:none) 
+	{
+		input.fret, input.chord-tab, #controls input { display: none; } 
+	}
+
 	#progression
 	{
 		min-height: 32px;
