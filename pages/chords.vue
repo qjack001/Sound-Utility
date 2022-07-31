@@ -9,7 +9,7 @@
 		<section id=info>
 			<h1>Simple Progression</h1>
 			<p>
-				Build a simple progression of simple chords. The three rows repersesent
+				Build a simple progression of simple chords. The three rows represent
 				the top three strings of the guitar (G-B-E).
 			</p>
 		</section>

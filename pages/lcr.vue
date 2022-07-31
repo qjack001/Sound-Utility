@@ -9,18 +9,18 @@
 		<section id=info>
 			<h1>LCR-[andom]</h1>
 			<p>
-				Generates a random arrangment of chords, melody, bass, and percussion for
-				insporation. Each instrument is chosen to be either organic or synthisized,
+				Generates a random arrangement of chords, melody, bass, and percussion for
+				inspiration. Each instrument is chosen to be either organic or synthesized,
 				and placed in the left, right, or center of the mix. You can hover over the
-				symbols to get a tooltip of what it repersents.
+				symbols to get a tooltip of what it represents.
 			</p>
 			<p>
-				The randomness is seeded to the time-since-epoch (in minutes), so quckly
+				The randomness is seeded to the time-since-epoch (in minutes), so quickly
 				refreshing the page will not change the result. The result you are seeing
 				is the result of this minute, and will not change until the next minute.
 			</p>
 		</section>
-		<div id="arrangment">
+		<div id="arrangement">
 			<p>L</p><p>C</p><p>R</p>
 			<section id="melody" :class="panMelody">
 				<svg v-if="synthMelody"
@@ -115,7 +115,7 @@
 	import seedrandom from 'seedrandom'
 
 
-	/* Seed random number genorator so that results don't change until a minute
+	/* Seed random number generator so that results don't change until a minute
 	 * passes (reduces habit of reloading until you get what you want).
 	 */
 	const epoch = Date.now()
@@ -132,12 +132,12 @@
 	/* Choose panning arrangement. Note: intentionally biased towards placing
 	 * bassline and drums in center.
 	 */
-	const arrangment = ['center', 'center', 'left', 'right'].sort(() => 0.5 - rand())
+	const arrangement = ['center', 'center', 'left', 'right'].sort(() => 0.5 - rand())
 	
-	const panDrums = arrangment[0]
-	const panBass = arrangment[1]
-	const panMelody = arrangment[2]
-	const panChords = arrangment[3]
+	const panDrums = arrangement[0]
+	const panBass = arrangement[1]
+	const panMelody = arrangement[2]
+	const panChords = arrangement[3]
 
 </script>
 
@@ -165,7 +165,7 @@
 		margin: auto;
 	}
 
-	#arrangment
+	#arrangement
 	{
 		display: grid;
 		grid-template-columns: 100px 100px 100px;
@@ -180,7 +180,7 @@
 		text-align: justify;
 	}
 
-	#arrangment > p
+	#arrangement > p
 	{
 		color: var(--accent);
 	}
