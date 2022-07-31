@@ -9,5 +9,5 @@ export default defineNuxtConfig({
 		base: '/Sound-Utility/'
 	},
 	target: 'static',
-	
+	ssr: false,
 })
