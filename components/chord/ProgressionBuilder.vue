@@ -1,19 +1,32 @@
 <template>
-	<!-- <section>
+	<section id="chord-tabs">
 		<ChordButton v-for="(chord, index) in chords"
+			:id="`chord-btn-${index}`"
 			:chord="chord"
+			:scale="scale"
 			:selected="index == currentChord"
 			:select="() => select(index)"
 		/>
-		<button v-on:click="addChord()">ADD</button>
-	</section> -->
+		<button 
+			v-on:click="deleteChord()"
+			class="chord-action delete"
+		>
+			DEL
+		</button>
+		<button 
+			v-on:click="addChord()"
+			class="chord-action"
+		>
+			ADD
+		</button>
+	</section>
 	<section id="progression">
 		<ChordFretboard
 			:scale="scale"
 			:length="25"
 			:base-offset="12 - getOffset(key)"
 
-			:chord="chords[currentChord]"
+			:chord="current()"
 			:onChange="(chord) => chords[currentChord] = chord"
 		/>
 	</section>
@@ -35,8 +48,7 @@
 <script setup lang="ts">
 	import { MAJOR, Key, Scale, MINOR, SURFY, Chord, Inversion } from '@/scripts/music-theory'
 
-
-	const chords = ref<Chord[]>([{ notes: [undefined, undefined, undefined], inversion: Inversion.ROOT }])
+	const chords = ref<Chord[]>([reactive({ notes: [undefined, undefined, undefined], inversion: Inversion.ROOT })])
 	const key = ref<Key>(Key.G)
 	const scale = ref<Scale>(MAJOR)
 
@@ -47,15 +59,28 @@
 	}
 
 	const addChord = () => {
-		const blankChord: Chord = {
-			notes: [undefined, undefined, undefined],
-			inversion: Inversion.ROOT
+		const lastChord: Chord = {
+			notes: [...chords.value[currentChord.value].notes],
+			inversion: chords.value[currentChord.value].inversion,
 		}
+		chords.value.splice(currentChord.value, 0, reactive(lastChord))
+		select(currentChord.value + 1)
+	}
 
-		chords.value.push(blankChord)
-		select(chords.value.length - 1)
+	const deleteChord = () => {
+		chords.value.splice(currentChord.value, 1)
+		currentChord.value = Math.max(0, currentChord.value - 1)
+		if (chords.value.length <= 0) {
+			chords.value.push(reactive({
+				notes: [undefined, undefined, undefined],
+				inversion: Inversion.ROOT,
+			}))
+		}
+	}
 
-		console.log(chords.value)
+	const current = () => {
+		console.log(chords.value[currentChord.value])
+		return chords.value[currentChord.value]
 	}
 
 	const getOffset = (key: Key): number => {
@@ -106,6 +131,11 @@
 </script>
 
 <style scoped>
+	#chord-tabs
+	{
+		margin: 40px 40px 20px;
+	}
+
 	#controls
 	{
 		margin: 20px 40px;
@@ -136,5 +166,38 @@
 
 		outline: none;
 		cursor: pointer;
+	}
+
+	.chord-action
+	{
+		font-family: inherit;
+		font-size: 0.9rem;
+		
+		cursor: pointer;
+		display: inline-block;
+		background: var(--white-70);
+		border: none;
+
+		padding: 0;
+		border-radius: 100%;
+		line-height: 34px;
+		width: 36px;
+		transform: translateY(-2px);
+		text-align: center;
+
+		margin-right: 1ch;
+	}
+
+	.chord-action.delete
+	{
+		border-radius: 0;
+		clip-path: polygon(100% 0, 0 50%, 100% 100%);
+		padding-left: 1.5ch;
+	}
+
+	.chord-action:hover
+	{
+		background: var(--accent);
+		color: var(--white-70)
 	}
 </style>
