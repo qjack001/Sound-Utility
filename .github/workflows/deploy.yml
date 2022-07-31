@@ -41,6 +41,9 @@ jobs:
         with:
           static_site_generator: nuxt
 
+      - name: Set base path
+        run: NUXT_APP_BASE_URL=/Sound-Utility/ node .output/server/index.mjs
+
       - name: Export static HTML
         run: pnpm run generate
 
