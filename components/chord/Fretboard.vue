@@ -13,7 +13,7 @@
 			>
 				1st
 			</label>
-			<ChordFredboardRow name="e-string"
+			<ChordFretboardRow name="e-string"
 				:scale="scale"
 				:length="length"
 				:isBase="inversion == Inversion.FIRST"
@@ -40,7 +40,7 @@
 			>
 				2nd
 			</label>
-			<ChordFredboardRow name="b-string"
+			<ChordFretboardRow name="b-string"
 				:scale="scale"
 				:length="length"
 				:isBase="inversion == Inversion.SECOND"
@@ -68,7 +68,7 @@
 			>
 				Root
 			</label>
-			<ChordFredboardRow name="g-string"
+			<ChordFretboardRow name="g-string"
 				:scale="scale"
 				:length="length"
 				:isBase="inversion == Inversion.ROOT"
@@ -92,7 +92,7 @@
 
 <script setup lang="ts">
 	import { Inversion, Scale, Chord } from '@/scripts/music-theory'
-	import { Choice } from './FredboardRow.vue';
+	import { Choice } from './FretboardRow.vue';
 
 	const props = withDefaults(defineProps<{
 		scale: Scale,
