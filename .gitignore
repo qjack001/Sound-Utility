@@ -1,2 +1,10 @@
-.DS_Store
+.DS-Store
 node_modules
+*.log*
+.nuxt
+.vite
+.nitro
+.cache
+.output
+.env
+dist

@@ -1,0 +1,22 @@
+{
+	"files.exclude": {
+		"**/.git": true,
+		".gitignore": true,
+		"**/.DS_Store": true,
+		"pnpm-lock.yaml": true,
+		"node_modules": true,
+		"dist": true,
+		".vite": true,
+		".output": true,
+		".nuxt": true,
+		"tsconfig.json": true,
+		"nuxt.config.ts": true,
+		".vscode": true,
+	},
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [{
+			"scope": "string.key.json5",
+			"settings": { "foreground": "#8BDEDB" },
+		}],
+	},
+}
