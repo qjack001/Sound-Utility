@@ -8,4 +8,6 @@ export default defineNuxtConfig({
 	router: {
 		base: '/Sound-Utility/'
 	},
+	target: 'static',
+	
 })
