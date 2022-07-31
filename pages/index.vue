@@ -1,11 +1,11 @@
 <template>
-	<Head>
-		<Meta name="theme-color" content="#eb5f2c"/>
-	</Head>
-	<h1>
-		<Wordmark/>
-	</h1>
 	<main>
+		<Head>
+			<Meta name="theme-color" content="#eb5f2c"/>
+		</Head>
+		<h1>
+			<Wordmark/>
+		</h1>
 		<p>
 			Sound Utility is a collection of tools for creating music, but that
 			do not create music themselves.
@@ -28,7 +28,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		padding-top: 120px;
+		padding-top: 20px;
 	}
 
 	::selection

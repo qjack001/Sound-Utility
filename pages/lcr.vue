@@ -1,11 +1,11 @@
 <template>
-	<Head>
-		<Title>Left Center Random | Sound Utility</Title>
-	</Head>
-	<p id="wordmark">
-		<Wordmark/>
-	</p>
 	<main>
+		<Head>
+			<Title>Left Center Random | Sound Utility</Title>
+		</Head>
+		<p id="wordmark">
+			<Wordmark/>
+		</p>
 		<section id=info>
 			<h1>LCR-[andom]</h1>
 			<p>
@@ -144,6 +144,7 @@
 <style scoped>
 	#wordmark
 	{
+		order: 1;
 		font-size: 3.5rem;
 		margin: 0 20px;
 		--background: var(--red);

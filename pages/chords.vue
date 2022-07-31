@@ -1,11 +1,11 @@
 <template>
-	<Head>
-		<Title>Simple Chord Progression | Sound Utility</Title>
-	</Head>
-	<p id="wordmark">
-		<Wordmark/>
-	</p>
 	<main>
+		<Head>
+			<Title>Simple Chord Progression | Sound Utility</Title>
+		</Head>
+		<p id="wordmark">
+			<Wordmark/>
+		</p>
 		<section id=info>
 			<h1>Simple Progression</h1>
 			<p>
