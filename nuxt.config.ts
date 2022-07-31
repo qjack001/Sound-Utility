@@ -4,5 +4,8 @@ import { defineNuxtConfig } from 'nuxt'
 export default defineNuxtConfig({
 	app: {
 		baseURL: '/Sound-Utility/'
-	}
+	},
+	router: {
+		base: '/Sound-Utility/'
+	},
 })
