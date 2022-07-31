@@ -204,15 +204,107 @@ export function chordNumberIsMajor(chordNum: number, scale: Scale): boolean
 
 export function nameChord(chord: Chord, scale: Scale): string
 {
-	return 'Im7(add9)'
+	const baseNote = (chord.inversion == Inversion.ROOT) ? chord.notes[0]
+		: (chord.inversion == Inversion.FIRST) ? chord.notes[2]
+		: (chord.inversion == Inversion.SECOND) ? chord.notes[1]
+		: undefined
+	
+	const third = (chord.inversion == Inversion.ROOT) ? chord.notes[1]
+		: (chord.inversion == Inversion.FIRST) ? chord.notes[0]
+		: (chord.inversion == Inversion.SECOND) ? chord.notes[2]
+		: undefined
+	
+	const fifth = (chord.inversion == Inversion.ROOT) ? chord.notes[2]
+		: (chord.inversion == Inversion.FIRST) ? chord.notes[1]
+		: (chord.inversion == Inversion.SECOND) ? chord.notes[0]
+		: undefined
+
+	if (baseNote == undefined ||
+		(chord.notes[0] == undefined && chord.notes[1]  == undefined) ||
+		(chord.notes[1] == undefined && chord.notes[2]  == undefined) ||
+		(chord.notes[0] == undefined && chord.notes[2]  == undefined))
+	{
+		return '...'
+	}
+
+	const chordText = () =>
+	{
+		const chordNum = chordNumber(baseNote, scale)
+		const flats = (isInScale(scale, baseNote)) ? ''
+			: (isInScale(scale, baseNote + 1)) ? '♭' : '♭♭'
+		
+		const isMajor = (third == undefined ||
+			(relation(baseNote, third) != Relation.MAJOR_THIRD && relation(baseNote, third) != Relation.MINOR_THIRD))
+			? chordNumberIsMajor(chordNum, scale)
+			: relation(baseNote, third) == Relation.MAJOR_THIRD
+		
+		const romanNumeral = (isMajor)
+			? toRomanNumeral(chordNum).toUpperCase()
+			: toRomanNumeral(chordNum).toLowerCase()
+
+		return `${flats}${romanNumeral}`
+	}
+
+	const thirdText = () =>
+	{
+		if (third == undefined)
+		{
+			return ''
+		}
+
+		switch (relation(baseNote, third))
+		{
+			case Relation.MINOR_SECOND:     return '♭2'
+			case Relation.MAJOR_SECOND:     return 'sus2'
+			case Relation.PERFECT_FOURTH:   return 'sus4'
+			case Relation.TRITONE:          return '♭5'
+			case Relation.PERFECT_FIFTH:    return '5'
+			case Relation.MINOR_SIXTH:      return '♯5'
+			case Relation.MAJOR_SIXTH:      return '6'
+			default: return ''
+		}
+	}
+
+	const fifthText = () =>
+	{
+		if (fifth == undefined)
+		{
+			return ''
+		}
+
+		switch (relation(baseNote, fifth))
+		{
+			case Relation.PERFECT_FOURTH:   return 'sus4'
+			case Relation.TRITONE:          return 'ᵒ'
+			case Relation.MINOR_SIXTH:      return '+'
+			case Relation.MAJOR_SIXTH:      return '6'
+			case Relation.MINOR_SEVENTH:    return '7'
+			case Relation.MAJOR_SEVENTH:    return 'maj7'
+			case Relation.MINOR_NINTH:      return '(add♭9)'
+			case Relation.NINTH:            return '(add9)'
+			case Relation.MAJOR_NINTH:      return '(add♯9)'
+			case Relation.FLAT_ELEVENTH:    return '(add♭11)'
+			case Relation.ELEVENTH:         return '(add11)'
+			case Relation.SHARP_ELEVENTH:   return '(add♯11)'
+			case Relation.TWELFTH:          return '(add12)'
+			case Relation.FLAT_THIRTEENTH:  return '(add♭13)'
+			case Relation.THIRTEENTH:       return '(add13)'
+			case Relation.SHARP_THIRTEENTH: return '(add♯13)'
+			case Relation.FLAT_FIFTEENTH:   return '(add♭15)'
+			case Relation.FIFTEENTH:        return '(add15)'
+			default: return ''
+		}
+	}
+	
+	return `${chordText()}${thirdText()}${fifthText()}`
 }
 
 export function inversionToText(inversion: Inversion): string
 {
 	switch (inversion)
 	{
-		case Inversion.FIRST: return '1'
-		case Inversion.SECOND: return '2'
+		case Inversion.FIRST: return '-1'
+		case Inversion.SECOND: return '-2'
 		default: return ''
 	}
 }
