@@ -67,12 +67,12 @@ export enum Relation
 	FLAT_ELEVENTH,
 	ELEVENTH,
 	SHARP_ELEVENTH,
-	TWELEVTH,
+	TWELFTH,
 	FLAT_THIRTEENTH,
 	THIRTEENTH,
 	SHARP_THIRTEENTH,
-	FLAT_FIFTHTEENTH,
-	FIFTHTEENTH,
+	FLAT_FIFTEENTH,
+	FIFTEENTH,
 }
 
 export function isRoot(note: number): boolean
@@ -122,12 +122,12 @@ export function relation(root: number, note: number): Relation
 		case 16: return Relation.FLAT_ELEVENTH
 		case 17: return Relation.ELEVENTH
 		case 18: return Relation.SHARP_ELEVENTH
-		case 19: return Relation.TWELEVTH
+		case 19: return Relation.TWELFTH
 		case 20: return Relation.FLAT_THIRTEENTH
 		case 21: return Relation.THIRTEENTH
 		case 22: return Relation.SHARP_THIRTEENTH
-		case 23: return Relation.FLAT_FIFTHTEENTH
-		case 24: return Relation.FIFTHTEENTH
+		case 23: return Relation.FLAT_FIFTEENTH
+		case 24: return Relation.FIFTEENTH
 		// unknown, treat as nothing
 		default: return Relation.UNISON
 	}
@@ -156,12 +156,12 @@ export function shortHand(relation: Relation): string
 		case Relation.FLAT_ELEVENTH:    return '♭11'
 		case Relation.ELEVENTH:         return '11'
 		case Relation.SHARP_ELEVENTH:   return '♯11'
-		case Relation.TWELEVTH:         return '12'
+		case Relation.TWELFTH:          return '12'
 		case Relation.FLAT_THIRTEENTH:  return '♭13'
 		case Relation.THIRTEENTH:       return '13'
 		case Relation.SHARP_THIRTEENTH: return '♯13'
-		case Relation.FLAT_FIFTHTEENTH: return '♭15'
-		case Relation.FIFTHTEENTH:      return '15'
+		case Relation.FLAT_FIFTEENTH:   return '♭15'
+		case Relation.FIFTEENTH:        return '15'
 	}
 }
 
