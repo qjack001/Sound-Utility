@@ -38,8 +38,6 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v1
-        with:
-          static_site_generator: nuxt
 
       - name: Export static HTML
         run: pnpm run generate
