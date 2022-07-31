@@ -7,7 +7,7 @@
 			:value="index - 1"
 			:id="`fretboard-row-${name}-${index}`"
 			:aria-label="`${name}, fret ${index}`" 
-			:checked="(index - 1 + offset) == selected"
+			:checked="isChecked(index - 1 + offset)"
 			@change="select(index - 1)"
 		/>
 		<label 
@@ -50,10 +50,11 @@
 		length: 25,
 	})
 
-	const selected = ref<number | undefined>(props.selected)
+	const { selected } = toRefs(props)
+
+	const isChecked = (index: number) => index == selected?.value
 
 	const select = (index: number) => {
-		selected.value = index + props.offset
 		props.onChange({
 			note: index + props.offset,
 			index: index
