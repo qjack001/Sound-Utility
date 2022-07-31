@@ -1,4 +1,7 @@
 <template>
+	<Head>
+		<Meta name="theme-color" content="#eb5f2c"/>
+	</Head>
 	<h1>
 		<Wordmark/>
 	</h1>
