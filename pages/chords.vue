@@ -32,7 +32,20 @@
 		inversion: Inversion.ROOT,
 	}])
 
+	const urlParams = new URLSearchParams(window.location.search)
 	
+	if (urlParams.has('key')) {
+		key.value = convert.stringToKey(urlParams.get('key')) ?? key.value
+	}
+
+	if (urlParams.has('scale')) {
+		scale.value = convert.stringToScale(urlParams.get('scale')) ?? scale.value
+	}
+
+	if (urlParams.has('prog')) {
+		chords.value = convert.stringToChords(urlParams.get('prog')) ?? chords.value
+	}
+
 	const setUrl = (param: string, value: string) => {
 		const url = new URL(window.location.href)
 		url.searchParams.set(param, value)
