@@ -83,7 +83,18 @@
 			/>
 		</section>
 		<section>
-			<div v-for="fret in length" :key="fret" class="fret-marker">
+			<div v-for="fret in length"
+				:key="fret"
+				:class="[
+					'fret-marker',
+					[3, 5, 7, 9].includes((fret - 1) % 12)
+						? 'marked'
+						: '',
+					[0, 12, 24].includes((fret - 1))
+						? 'octave'
+						: '',
+				]"
+			>
 				{{fret - 1}}
 			</div>
 		</section>
@@ -250,6 +261,17 @@
 		line-height: calc(var(--fret-size) / 2);
 		text-align: center;
 		user-select: none;
+	}
+
+	.fret-marker.marked
+	{
+		color: var(--foreground);
+	}
+
+	.fret-marker.octave
+	{
+		color: var(--background);
+		background: var(--accent);
 	}
 
 	.fretboard::before
