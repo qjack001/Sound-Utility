@@ -16,6 +16,7 @@
 		color: var(--accent);
 		-webkit-text-stroke: 0.02em var(--foreground);
 		text-decoration: none;
+		user-select: none;
 	}
 
 	a:hover,

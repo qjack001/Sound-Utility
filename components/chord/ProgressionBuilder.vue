@@ -165,6 +165,7 @@
 		border-radius: 0;
 
 		outline: none;
+		user-select: none;
 		cursor: pointer;
 	}
 
@@ -174,6 +175,7 @@
 		font-size: 0.9rem;
 		
 		cursor: pointer;
+		user-select: none;
 		display: inline-block;
 		background: var(--white-70);
 		border: none;

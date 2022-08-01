@@ -175,9 +175,9 @@ export function chordNumber(baseNote: number, scale: Scale): number
 		: chordNumber(baseNote + 1, scale)
 }
 
-export function toRomanNumeral(num: number): string
+export function toRomanNumeral(digit: number): string
 {
-	switch (num)
+	switch (digit)
 	{
 		case 1: return 'i'
 		case 2: return 'ii'
