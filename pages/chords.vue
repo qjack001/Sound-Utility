@@ -33,9 +33,16 @@
 	}])
 
 	
+	const setUrl = (param: string, value: string) => {
+		const url = new URL(window.location.href)
+		url.searchParams.set(param, value)
+		window.history.replaceState(null, '', url)
+	}
+
 	const setTonic = (e: HTMLInputElement) => {
 		const newKey = Number.parseInt(e.value) as Key
 		key.value = newKey
+		setUrl('key', convert.keyToString(key.value))
 	}
 
 	const setScale = (e: HTMLInputElement) => {
@@ -43,10 +50,12 @@
 			.map(i => Number.parseInt(i)) as Scale
 
 		scale.value = newScale
+		setUrl('scale', convert.scaleToString(scale.value))
 	}
 	
 	const setChords = (newChords: Chord[]) => {
 		chords.value = newChords
+		setUrl('prog', convert.chordsToString(chords.value))
 	}
 </script>
 
