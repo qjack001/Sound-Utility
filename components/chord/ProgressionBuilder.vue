@@ -24,21 +24,21 @@
 		<ChordFretboard
 			:scale="scale"
 			:length="25"
-			:base-offset="12 - getOffset(key)"
+			:base-offset="12 - getOffset(tonic)"
 
 			:chord="current()"
-			:onChange="(chord) => chords[currentChord] = chord"
+			:onChange="updateChord"
 		/>
 	</section>
 	<section id="controls">
 		<h3>Key:</h3>
-		<select name="key" v-model="key">
-			<option v-for="option in keys" :value="option" @change="key = option">
+		<select name="key" :value="tonic" @change="setTonic($event.target as HTMLInputElement)">
+			<option v-for="option in keys" :value="option">
 				{{ Key[option].replaceAll('_FLAT', '♭').replaceAll('_SHARP', '♯') }}
 			</option>
 		</select>
-		<select name="scale" v-model="scale">
-			<option v-for="option in scales" :value="option.value" @change="scale = option.value">
+		<select name="scale" :value="scale" @change="setScale($event.target as HTMLInputElement)">
+			<option v-for="option in scales" :value="option.value">
 				{{ option.name }}
 			</option>
 		</select>
@@ -46,11 +46,19 @@
 </template>
 
 <script setup lang="ts">
-	import { MAJOR, Key, Scale, MINOR, SURFY, Chord, Inversion } from '@/scripts/music-theory'
+	import { Key, Scale, MAJOR, MINOR, SURFY, Chord, Inversion } from '@/scripts/music-theory'
 
-	const chords = ref<Chord[]>([reactive({ notes: [undefined, undefined, undefined], inversion: Inversion.ROOT })])
-	const key = ref<Key>(Key.G)
-	const scale = ref<Scale>(MAJOR)
+	const props = defineProps<{
+		chords: Chord[],
+		tonic: Key,
+		scale: Scale,
+
+		setTonic: (e: HTMLInputElement) => void,
+		setScale: (e: HTMLInputElement) => void,
+		setChords: (newChords: Chord[]) => void,
+	}>()
+
+	const { chords } = toRefs(props)
 
 	const currentChord = ref<number>(0)
 
@@ -65,6 +73,7 @@
 		}
 		chords.value.splice(currentChord.value, 0, reactive(lastChord))
 		select(currentChord.value + 1)
+		props.setChords(chords.value)
 	}
 
 	const deleteChord = () => {
@@ -76,10 +85,15 @@
 				inversion: Inversion.ROOT,
 			}))
 		}
+		props.setChords(chords.value)
+	}
+
+	const updateChord = (chord: Chord) => {
+		chords.value[currentChord.value] = chord
+		props.setChords(chords.value)
 	}
 
 	const current = () => {
-		console.log(chords.value[currentChord.value])
 		return chords.value[currentChord.value]
 	}
 
