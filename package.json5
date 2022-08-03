@@ -5,11 +5,13 @@
 	scripts: {
 		build: 'nuxt build',
 		dev: 'nuxt dev',
+		lint: 'eslint .',
 		generate: 'nuxt generate',
 		preview: 'nuxt preview',
 	},
 	devDependencies: {
 		'@types/seedrandom': '^3.0.2',
+		'eslint-config-goodbyte-styleguide-typescript': '^0.0.3',
 		nuxt: '3.0.0-rc.6',
 	},
 	dependencies: {
