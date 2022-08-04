@@ -12,9 +12,15 @@
 		</p>
 		<h2>Tools:</h2>
 		<ul>
-			<MenuOption to="/lcr">Left Center Random</MenuOption>
-			<MenuOption to="/chords">Simple Chord Progression</MenuOption>
-			<MenuOption to="/metronome">Metronome</MenuOption>
+			<MenuOption to="/lcr">
+				Left Center Random
+			</MenuOption>
+			<MenuOption to="/chords">
+				Simple Chord Progression
+			</MenuOption>
+			<MenuOption to="/metronome">
+				Metronome
+			</MenuOption>
 		</ul>
 	</main>
 </template>

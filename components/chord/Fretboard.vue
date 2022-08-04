@@ -1,54 +1,60 @@
 <template>
 	<div class="fretboard">
 		<section>
-			<input type="radio" name="inversion" class="select-inversion"
-				id="first-inversion"
+			<input
+				id="first-inversion" type="radio"
+				name="inversion"
+				class="select-inversion"
 				value="first-inversion"
 				:checked="chord?.inversion == Inversion.FIRST"
 				@change="emitInversion(Inversion.FIRST)"
-			/>
+			>
 			<label 
 				for="first-inversion"
 				class="select-inversion"
 			>
 				1st
 			</label>
-			<ChordFretboardRow name="e-string"
+			<ChordFretboardRow
+				name="e-string"
 				:scale="scale"
 				:length="length"
-				:isBase="chord?.inversion == Inversion.FIRST"
+				:is-base="chord?.inversion == Inversion.FIRST"
 				:root-note="rootNote()?.note"
 				:root-index="rootNote()?.index"
 
 				:selected="chord?.notes[2]"
-				:onChange="(selection) => emitChord(2, selection)"
+				:on-change="(selection) => emitChord(2, selection)"
 
 				:offset="offset.top + baseOffset"
 				:below="getIndex(chord?.notes[1], offset.middle)"
 			/>
 		</section>
 		<section>
-			<input type="radio" name="inversion" class="select-inversion"
-				id="second-inversion"
+			<input
+				id="second-inversion" type="radio"
+				name="inversion"
+				class="select-inversion"
 				value="second-inversion"
 				:checked="chord?.inversion == Inversion.SECOND"
 				@change="emitInversion(Inversion.SECOND)"
-			/>
+			>
 			<label 
 				for="second-inversion"
 				class="select-inversion"
 			>
 				2nd
 			</label>
-			<ChordFretboardRow name="b-string"
+			<ChordFretboardRow
+				name="b-string"
 				:scale="scale"
 				:length="length"
-				:isBase="chord?.inversion == Inversion.SECOND"
+				:is-base="chord?.inversion == Inversion.SECOND"
 				:root-note="rootNote()?.note"
 				:root-index="rootNote()?.index"
 
 				:selected="chord?.notes[1]"
-				:onChange="(selection) => emitChord(1, selection)"
+				:on-change="(selection) => emitChord(1, selection)"
 
 				:offset="offset.middle + baseOffset"
 				:above="getIndex(chord?.notes[2], offset.top)"
@@ -56,46 +62,50 @@
 			/>
 		</section>
 		<section>
-			<input type="radio" name="inversion" class="select-inversion"
-				id="root-inversion"
+			<input
+				id="root-inversion" type="radio"
+				name="inversion"
+				class="select-inversion"
 				value="root-inversion"
 				:checked="chord?.inversion == Inversion.ROOT"
 				@change="emitInversion(Inversion.ROOT)"
-			/>
+			>
 			<label 
 				for="root-inversion"
 				class="select-inversion"
 			>
 				Root
 			</label>
-			<ChordFretboardRow name="g-string"
+			<ChordFretboardRow
+				name="g-string"
 				:scale="scale"
 				:length="length"
-				:isBase="chord?.inversion == Inversion.ROOT"
+				:is-base="chord?.inversion == Inversion.ROOT"
 				:root-note="rootNote()?.note"
 				:root-index="rootNote()?.index"
 
 				:selected="chord?.notes[0]"
-				:onChange="(selection) => emitChord(0, selection)"
+				:on-change="(selection) => emitChord(0, selection)"
 
 				:offset="offset.bottom + baseOffset"
 				:above="getIndex(chord?.notes[1], offset.middle)"
 			/>
 		</section>
 		<section>
-			<div v-for="fret in length"
+			<div
+				v-for="fret in length"
 				:key="fret"
 				:class="[
 					'fret-marker',
-					[3, 5, 7, 9].includes((fret - 1) % 12)
+					[ 3, 5, 7, 9 ].includes((fret - 1) % 12)
 						? 'marked'
 						: '',
-					[0, 12, 24].includes((fret - 1))
+					[ 0, 12, 24 ].includes((fret - 1))
 						? 'octave'
 						: '',
 				]"
 			>
-				{{fret - 1}}
+				{{ fret - 1 }}
 			</div>
 		</section>
 	</div>
@@ -103,17 +113,15 @@
 
 <script setup lang="ts">
 	import { Inversion, Scale, Chord } from '@/scripts/music-theory'
-	import { Choice } from './FretboardRow.vue';
+	import { Choice } from './FretboardRow.vue'
 
 	const props = withDefaults(defineProps<{
-		scale: Scale,
-		length: number,
-		baseOffset?: number,
-		chord?: Chord,
+		scale: Scale
+		length: number
+		baseOffset?: number
+		chord: Chord
 		onChange: (selection: Chord) => void
-	}>(), {
-		baseOffset: 0
-	})
+	}>(), { baseOffset: 0 })
 
 	const { chord } = toRefs(reactive(props))
 
@@ -124,27 +132,28 @@
 	}
 
 	const rootNote = () => {
-		switch (chord?.value?.inversion) {
-			case Inversion.FIRST: return convertToChoice(chord?.value?.notes[2], offset.top)
-			case Inversion.SECOND: return convertToChoice(chord?.value?.notes[1], offset.middle)
+		switch (chord.value.inversion) {
+			case Inversion.FIRST: return convertToChoice(chord.value.notes[2], offset.top)
+			case Inversion.SECOND: return convertToChoice(chord.value.notes[1], offset.middle)
 			case Inversion.ROOT:
-			default: return convertToChoice(chord?.value?.notes[0], offset.bottom)
+			default: return convertToChoice(chord.value.notes[0], offset.bottom)
 		}
 	}
 
 	const emitInversion = (selection: Inversion) => {
 		props.onChange({
-			notes: chord?.value?.notes ?? [undefined, undefined, undefined],
+			notes: chord.value.notes,
 			inversion: selection,
 		})
 	}
 
 	const emitChord = (index: number, selection: Choice) => {
-		const chordNotes = chord?.value?.notes ?? [undefined, undefined, undefined]
+		const chordNotes = chord.value.notes
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 		chordNotes[index] = selection.note
 		props.onChange({
 			notes: chordNotes,
-			inversion: chord?.value?.inversion ?? Inversion.ROOT,
+			inversion: chord.value.inversion,
 		})
 	}
 
@@ -155,7 +164,7 @@
 
 		return {
 			note: note,
-			index: note - (offset + props.baseOffset)
+			index: note - (offset + props.baseOffset),
 		}
 	}
 

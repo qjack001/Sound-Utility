@@ -6,7 +6,7 @@
 		<p id="wordmark">
 			<Wordmark/>
 		</p>
-		<section id=info>
+		<section id="info">
 			<h1>Simple Progression</h1>
 			<p>
 				Build a simple progression of simple chords. The three rows represent
@@ -27,10 +27,12 @@
 
 	const key = ref<Key>(Key.G)
 	const scale = ref<Scale>(MAJOR)
-	const chords = ref<Chord[]>([{
-		notes: [undefined, undefined, undefined],
-		inversion: Inversion.ROOT,
-	}])
+	const chords = ref<Chord[]>([
+		{
+			notes: [ undefined, undefined, undefined ],
+			inversion: Inversion.ROOT,
+		},
+	])
 
 	const urlParams = new URLSearchParams(window.location.search)
 	

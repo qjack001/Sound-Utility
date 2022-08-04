@@ -1,18 +1,15 @@
-export type Chord =
-{
-	notes: [number | undefined, number | undefined, number | undefined],
-	inversion: Inversion,
+export interface Chord {
+	notes: [number | undefined, number | undefined, number | undefined]
+	inversion: Inversion
 }
 
-export enum Inversion
-{
+export enum Inversion {
 	ROOT,
 	FIRST,
 	SECOND,
 }
 
-export enum Key
-{
+export enum Key {
 	A, A_SHARP, A_FLAT,
 	B, B_FLAT,
 	C, C_SHARP,
@@ -42,12 +39,17 @@ export type Scale =
 	ScaleDegree,
 ]
 
-export const MAJOR: Scale = [0, 2, 4, 5, 7, 9, 11]
-export const MINOR: Scale = [0, 2, 3, 5, 7, 8, 10]
-export const SURFY: Scale = [0, 1, 4, 5, 7, 8, 11]
+export const MAJOR: Scale = [
+	0, 2, 4, 5, 7, 9, 11,
+]
+export const MINOR: Scale = [
+	0, 2, 3, 5, 7, 8, 10,
+]
+export const SURFY: Scale = [
+	0, 1, 4, 5, 7, 8, 11,
+]
 
-export enum Relation
-{
+export enum Relation {
 	UNISON,
 	MINOR_SECOND,
 	MAJOR_SECOND,
@@ -75,34 +77,28 @@ export enum Relation
 	FIFTEENTH,
 }
 
-export function isRoot(note: number): boolean
-{
+export function isRoot(note: number): boolean {
 	return (note % 12) == 0
 }
 
-export function isInScale(scale: Scale, note: number): boolean
-{
+export function isInScale(scale: Scale, note: number): boolean {
 	const degree = toScaleDegree(note)
 	return scale.includes(degree)
 }
 
-export function toScaleDegree(note: number): ScaleDegree
-{
+export function toScaleDegree(note: number): ScaleDegree {
 	return (note % 12) as ScaleDegree
 }
 
-export function relation(root: number, note: number): Relation
-{
-	if (note < root)
-	{
+export function relation(root: number, note: number): Relation {
+	if (note < root) {
 		note += 12
 	}
 
 	// semitones apart
 	const distance = note - root
 	
-	switch (distance)
-	{
+	switch (distance) {
 		case  0: return Relation.UNISON
 		case  1: return Relation.MINOR_SECOND
 		case  2: return Relation.MAJOR_SECOND
@@ -133,10 +129,8 @@ export function relation(root: number, note: number): Relation
 	}
 }
 
-export function shortHand(relation: Relation): string
-{
-	switch (relation)
-	{
+export function shortHand(relation: Relation): string {
+	switch (relation) {
 		case Relation.UNISON:           return '0'
 		case Relation.MINOR_SECOND:     return '♭2'
 		case Relation.MAJOR_SECOND:     return 's2'
@@ -165,8 +159,7 @@ export function shortHand(relation: Relation): string
 	}
 }
 
-export function chordNumber(baseNote: number, scale: Scale): number
-{
+export function chordNumber(baseNote: number, scale: Scale): number {
 	const degree = toScaleDegree(baseNote)
 	const chordNum = scale.indexOf(degree)
 
@@ -175,10 +168,8 @@ export function chordNumber(baseNote: number, scale: Scale): number
 		: chordNumber(baseNote + 1, scale)
 }
 
-export function toRomanNumeral(digit: number): string
-{
-	switch (digit)
-	{
+export function toRomanNumeral(digit: number): string {
+	switch (digit) {
 		case 1: return 'i'
 		case 2: return 'ii'
 		case 3: return 'iii'
@@ -190,45 +181,38 @@ export function toRomanNumeral(digit: number): string
 	}
 }
 
-export function chordNumberIsMajor(chordNum: number, scale: Scale): boolean
-{
+export function chordNumberIsMajor(chordNum: number, scale: Scale): boolean {
 	const baseNote = scale[chordNum - 1]
 
-	if (baseNote == undefined)
-	{
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	if (baseNote == undefined) {
 		return false
 	}
 
 	return isInScale(scale, baseNote + 4)
 }
 
-export function nameChord(chord: Chord, scale: Scale): string
-{
+export function nameChord(chord: Chord, scale: Scale): string {
 	const baseNote = (chord.inversion == Inversion.ROOT) ? chord.notes[0]
 		: (chord.inversion == Inversion.FIRST) ? chord.notes[2]
-		: (chord.inversion == Inversion.SECOND) ? chord.notes[1]
-		: undefined
+			: chord.notes[1]
 	
 	const third = (chord.inversion == Inversion.ROOT) ? chord.notes[1]
 		: (chord.inversion == Inversion.FIRST) ? chord.notes[0]
-		: (chord.inversion == Inversion.SECOND) ? chord.notes[2]
-		: undefined
+			: chord.notes[2]
 	
 	const fifth = (chord.inversion == Inversion.ROOT) ? chord.notes[2]
 		: (chord.inversion == Inversion.FIRST) ? chord.notes[1]
-		: (chord.inversion == Inversion.SECOND) ? chord.notes[0]
-		: undefined
+			: chord.notes[0]
 
 	if (baseNote == undefined ||
 		(chord.notes[0] == undefined && chord.notes[1]  == undefined) ||
 		(chord.notes[1] == undefined && chord.notes[2]  == undefined) ||
-		(chord.notes[0] == undefined && chord.notes[2]  == undefined))
-	{
+		(chord.notes[0] == undefined && chord.notes[2]  == undefined)) {
 		return '...'
 	}
 
-	const chordText = () =>
-	{
+	const chordText = () => {
 		const chordNum = chordNumber(baseNote, scale)
 		const flats = (isInScale(scale, baseNote)) ? ''
 			: (isInScale(scale, baseNote + 1)) ? '♭' : '♭♭'
@@ -245,15 +229,12 @@ export function nameChord(chord: Chord, scale: Scale): string
 		return `${flats}${romanNumeral}`
 	}
 
-	const thirdText = () =>
-	{
-		if (third == undefined)
-		{
+	const thirdText = () => {
+		if (third == undefined) {
 			return ''
 		}
 
-		switch (relation(baseNote, third))
-		{
+		switch (relation(baseNote, third)) {
 			case Relation.MINOR_SECOND:     return '♭2'
 			case Relation.MAJOR_SECOND:     return 'sus2'
 			case Relation.PERFECT_FOURTH:   return 'sus4'
@@ -265,15 +246,12 @@ export function nameChord(chord: Chord, scale: Scale): string
 		}
 	}
 
-	const fifthText = () =>
-	{
-		if (fifth == undefined)
-		{
+	const fifthText = () => {
+		if (fifth == undefined) {
 			return ''
 		}
 
-		switch (relation(baseNote, fifth))
-		{
+		switch (relation(baseNote, fifth)) {
 			case Relation.PERFECT_FOURTH:   return 'sus4'
 			case Relation.TRITONE:          return 'ᵒ'
 			case Relation.MINOR_SIXTH:      return '+'
@@ -299,10 +277,8 @@ export function nameChord(chord: Chord, scale: Scale): string
 	return `${chordText()}${thirdText()}${fifthText()}`
 }
 
-export function inversionToText(inversion: Inversion): string
-{
-	switch (inversion)
-	{
+export function inversionToText(inversion: Inversion): string {
+	switch (inversion) {
 		case Inversion.FIRST: return '-1'
 		case Inversion.SECOND: return '-2'
 		default: return ''
