@@ -2,13 +2,13 @@
 	<Head>
 		<Meta charset="utf-8"/>
 		<Meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-		<Meta content='text/html; charset=utf-8' http-equiv='Content-Type'/>
+		<Meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 		<Meta name="theme-color" content="#d0cac4" media="(prefers-color-scheme: light)"/>
 		<Meta name="theme-color" content="#2a282b" media="(prefers-color-scheme: dark)"/>
 		<Meta name="author" content="Jack Guinane"/>
 		<Title>Sound Utility</Title>
 	</Head>
-    <NuxtPage/>
+	<NuxtPage/>
 </template>
 
 <style>

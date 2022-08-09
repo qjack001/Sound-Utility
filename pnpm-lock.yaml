@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@types/seedrandom': ^3.0.2
-  eslint-config-goodbyte-styleguide-typescript: ^0.0.3
+  eslint-config-goodbyte-styleguide-typescript: ^0.0.4
   nuxt: 3.0.0-rc.6
   seedrandom: ^3.0.5
 
@@ -11,7 +11,7 @@ dependencies:
 
 devDependencies:
   '@types/seedrandom': 3.0.2
-  eslint-config-goodbyte-styleguide-typescript: 0.0.3
+  eslint-config-goodbyte-styleguide-typescript: 0.0.4
   nuxt: 3.0.0-rc.6
 
 packages:
@@ -2188,8 +2188,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /eslint-config-goodbyte-styleguide-typescript/0.0.3:
-    resolution: {integrity: sha512-hFkphCvkzpfrc4n8U6pG9tKTPqmWlCk0Jfvr4STWB3R0EM3vgEQESDs8QSvwATXWVDwN7TWNUFxjSaM27O2A1g==}
+  /eslint-config-goodbyte-styleguide-typescript/0.0.4:
+    resolution: {integrity: sha512-indv+2rC2R2392xP+0p9stiw3tDaJX8NdFrhKsiSBek0cjGdWLW5Rti6YYMlaNJGRiNEeUgR6WdAbsijDlz97Q==}
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.32.0_iosr3hrei2tubxveewluhu5lhy
       '@typescript-eslint/parser': 5.32.0_qugx7qdu5zevzvxaiqyxfiwquq

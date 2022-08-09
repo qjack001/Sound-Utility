@@ -11,7 +11,7 @@
 	},
 	devDependencies: {
 		'@types/seedrandom': '^3.0.2',
-		'eslint-config-goodbyte-styleguide-typescript': '^0.0.3',
+		'eslint-config-goodbyte-styleguide-typescript': '^0.0.4',
 		nuxt: '3.0.0-rc.6',
 	},
 	dependencies: {

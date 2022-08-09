@@ -1,21 +1,23 @@
 <template>
 	<section id="chord-tabs">
-		<ChordButton v-for="(chord, index) in chords"
+		<ChordButton
+			v-for="(chord, index) in chords"
 			:id="`chord-btn-${index}`"
+			:key="index"
 			:chord="chord"
 			:scale="scale"
 			:selected="index == currentChord"
 			:select="() => select(index)"
 		/>
 		<button 
-			v-on:click="deleteChord()"
 			class="chord-action delete"
+			@click="deleteChord()"
 		>
 			DEL
 		</button>
 		<button 
-			v-on:click="addChord()"
 			class="chord-action"
+			@click="addChord()"
 		>
 			ADD
 		</button>
@@ -27,18 +29,18 @@
 			:base-offset="12 - getOffset(tonic)"
 
 			:chord="current()"
-			:onChange="updateChord"
+			:on-change="updateChord"
 		/>
 	</section>
 	<section id="controls">
 		<h3>Key:</h3>
 		<select name="key" :value="tonic" @change="setTonic($event.target as HTMLInputElement)">
-			<option v-for="option in keys" :value="option">
+			<option v-for="option in KEYS" :key="option" :value="option">
 				{{ Key[option].replaceAll('_FLAT', '♭').replaceAll('_SHARP', '♯') }}
 			</option>
 		</select>
 		<select name="scale" :value="scale" @change="setScale($event.target as HTMLInputElement)">
-			<option v-for="option in scales" :value="option.value">
+			<option v-for="option in SCALES" :key="option.name" :value="option.value">
 				{{ option.name }}
 			</option>
 		</select>
@@ -49,13 +51,13 @@
 	import { Key, Scale, MAJOR, MINOR, SURFY, Chord, Inversion } from '@/scripts/music-theory'
 
 	const props = defineProps<{
-		chords: Chord[],
-		tonic: Key,
-		scale: Scale,
+		chords: Chord[]
+		tonic: Key
+		scale: Scale
 
-		setTonic: (e: HTMLInputElement) => void,
-		setScale: (e: HTMLInputElement) => void,
-		setChords: (newChords: Chord[]) => void,
+		setTonic: (e: HTMLInputElement) => void
+		setScale: (e: HTMLInputElement) => void
+		setChords: (newChords: Chord[]) => void
 	}>()
 
 	const { chords } = toRefs(props)
@@ -68,7 +70,7 @@
 
 	const addChord = () => {
 		const lastChord: Chord = {
-			notes: [...chords.value[currentChord.value].notes],
+			notes: [ ...chords.value[currentChord.value].notes ],
 			inversion: chords.value[currentChord.value].inversion,
 		}
 		chords.value.splice(currentChord.value, 0, reactive(lastChord))
@@ -81,7 +83,7 @@
 		currentChord.value = Math.max(0, currentChord.value - 1)
 		if (chords.value.length <= 0) {
 			chords.value.push(reactive({
-				notes: [undefined, undefined, undefined],
+				notes: [ undefined, undefined, undefined ],
 				inversion: Inversion.ROOT,
 			}))
 		}
@@ -131,13 +133,13 @@
 		}
 	}
 
-	const keys = [
+	const KEYS = [
 		Key.A_FLAT, Key.A, Key.A_SHARP, Key.B_FLAT, Key.B, Key.C, Key.C_SHARP,
 		Key.D_FLAT, Key.D, Key.D_SHARP, Key.E_FLAT, Key.E, Key.F, Key.F_SHARP,
 		Key.G_FLAT, Key.G, Key.G_SHARP,
 	]
 
-	const scales = [
+	const SCALES = [
 		{ value: MAJOR, name: 'Major' },
 		{ value: MINOR, name: 'Minor' },
 		{ value: SURFY, name: 'Surfy' },

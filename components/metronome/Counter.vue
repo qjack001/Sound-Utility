@@ -2,7 +2,8 @@
 	<div class="grid" :style="`--beats: ${beats}`">
 		<div
 			v-for="beat in beats"
-			:class="['beat', (beat == current) ? 'selected' : '']"
+			:key="beat"
+			:class="[ 'beat', (beat == current) ? 'selected' : '' ]"
 		>
 			{{ beat }}
 		</div>
@@ -12,11 +13,11 @@
 <script setup lang="ts">
 	import { onBeforeUnmount, watch } from 'vue'
 	import { Metronome } from '@/scripts/metronome'
-	import { HighResolutionTimer } from '@/scripts/timing.js';
+	import { HighResolutionTimer } from '@/scripts/timing.js'
 
 	const props = defineProps<{
-		beats: number,
-		bpm: number,
+		beats: number
+		bpm: number
 	}>()
 
 	const current = ref<number>(1)

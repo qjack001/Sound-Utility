@@ -6,7 +6,7 @@
 		<p id="wordmark">
 			<Wordmark/>
 		</p>
-		<section id=info>
+		<section id="info">
 			<h1>LCR-[andom]</h1>
 			<p>
 				Generates a random arrangement of chords, melody, bass, and percussion for
@@ -23,16 +23,22 @@
 		<div id="arrangement">
 			<p>L</p><p>C</p><p>R</p>
 			<section id="melody" :class="panMelody">
-				<svg v-if="synthMelody"
-					xmlns="http://www.w3.org/2000/svg" width="81" height="43" viewBox="0 0 163 87"
+				<svg
+					v-if="synthMelody"
+					xmlns="http://www.w3.org/2000/svg"
+					width="81" height="43"
+					viewBox="0 0 163 87"
 					:aria-label="'synth melody, panned ' + panMelody" 
 					role="figure"
 				>
 					<title>Synth melody</title>
 					<path fill="none" stroke-linecap="round" stroke-width="4" d="M2 2h53v31h52v31h53"/>
 				</svg>
-				<svg v-else 
-					xmlns="http://www.w3.org/2000/svg" width="81.7" height="43.7" viewBox="0 0 163 87"
+				<svg
+					v-else 
+					xmlns="http://www.w3.org/2000/svg"
+					width="81.7" height="43.7"
+					viewBox="0 0 163 87"
 					:aria-label="'guitar melody, panned ' + panMelody" 
 					role="figure"
 				>
@@ -41,8 +47,11 @@
 				</svg>
 			</section>
 			<section id="chords" :class="panChords">
-				<svg v-if="synthChords"
-					xmlns="http://www.w3.org/2000/svg" width="81.35" height="22.1" viewBox="0 0 163 44"
+				<svg
+					v-if="synthChords"
+					xmlns="http://www.w3.org/2000/svg"
+					width="81.35" height="22.1"
+					viewBox="0 0 163 44"
 					:aria-label="'synth chords, panned ' + panChords" 
 					role="figure"
 				>
@@ -51,8 +60,11 @@
 						<path d="M2 2h159M2 22h159M2 42h159"/>
 					</g>
 				</svg>
-				<svg v-else
-					xmlns="http://www.w3.org/2000/svg" width="81.35" height="46.15" viewBox="0 0 163 92"
+				<svg
+					v-else
+					xmlns="http://www.w3.org/2000/svg"
+					width="81.35" height="46.15"
+					viewBox="0 0 163 92"
 					:aria-label="'guitar chords, panned ' + panChords" 
 					role="figure"
 				>
@@ -65,16 +77,22 @@
 				</svg>
 			</section>
 			<section id="bassline" :class="panBass">
-				<svg v-if="synthBass"
-					xmlns="http://www.w3.org/2000/svg" width="85.35" height="6" viewBox="0 0 171 12"
+				<svg
+					v-if="synthBass"
+					xmlns="http://www.w3.org/2000/svg"
+					width="85.35" height="6"
+					viewBox="0 0 171 12"
 					:aria-label="'synth bass, panned ' + panBass" 
 					role="figure"
 				>
 					<title>Synth bass</title>
 					<path fill="none" stroke-linecap="round" stroke-width="12" d="M6 6h159"/>
 				</svg>
-				<svg v-else
-					xmlns="http://www.w3.org/2000/svg" width="85.35" height="31.8" viewBox="0 0 171 64"
+				<svg
+					v-else
+					xmlns="http://www.w3.org/2000/svg"
+					width="85.35" height="31.8"
+					viewBox="0 0 171 64"
 					:aria-label="'bass guitar, panned ' + panBass" 
 					role="figure"
 				>
@@ -83,10 +101,14 @@
 				</svg>
 			</section>
 			<section id="percussion" :class="panDrums">
-				<svg v-if="synthDrums"
-					xmlns="http://www.w3.org/2000/svg" width="81" height="12.95" viewBox="0 0 128 22"
+				<svg
+					v-if="synthDrums"
+					xmlns="http://www.w3.org/2000/svg"
+					width="81" height="12.95"
+					viewBox="0 0 128 22"
 					:aria-label="'synth drums, panned ' + panDrums" 
-					role="figure">
+					role="figure"
+				>
 					<title>Synth drums</title>
 					<g transform="translate(-37 -39)">
 						<rect width="21.9" height="21.9" rx="4" transform="translate(37 39)"/>
@@ -94,8 +116,11 @@
 						<rect width="21.9" height="21.9" rx="4" transform="translate(70 39)"/>
 					</g>
 				</svg>
-				<svg v-else
-					xmlns="http://www.w3.org/2000/svg" width="81" height="12.95" viewBox="0 0 128 22"
+				<svg
+					v-else
+					xmlns="http://www.w3.org/2000/svg"
+					width="81" height="12.95"
+					viewBox="0 0 128 22"
 					:aria-label="'real drums, panned ' + panDrums" 
 					role="figure"
 				>
@@ -114,30 +139,29 @@
 <script setup lang="ts">
 	import seedrandom from 'seedrandom'
 
-
 	/* Seed random number generator so that results don't change until a minute
 	 * passes (reduces habit of reloading until you get what you want).
 	 */
-	const epoch = Date.now()
-	const epochMinute = Math.floor(epoch / 60000)
-	let rand = seedrandom(`${epochMinute}`)
+	const EPOCH = Date.now()
+	const EPOCH_MINUTE = Math.floor(EPOCH / 60000)
+	const rand = seedrandom(`${EPOCH_MINUTE}`)
 
 	/* "Flip a coin" to pick between real & synth versions.
 	 */
-	const synthMelody = (rand() < 0.5)
-	const synthChords = (rand() < 0.5)
-	const synthBass = (rand() < 0.5)
-	const synthDrums = (rand() < 0.5)
+	const synthMelody = ref(rand() < 0.5)
+	const synthChords = ref(rand() < 0.5)
+	const synthBass = ref(rand() < 0.5)
+	const synthDrums = ref(rand() < 0.5)
 
 	/* Choose panning arrangement. Note: intentionally biased towards placing
 	 * bassline and drums in center.
 	 */
-	const arrangement = ['center', 'center', 'left', 'right'].sort(() => 0.5 - rand())
+	const ARRANGEMENT = [ 'center', 'center', 'left', 'right' ].sort(() => 0.5 - rand())
 	
-	const panDrums = arrangement[0]
-	const panBass = arrangement[1]
-	const panMelody = arrangement[2]
-	const panChords = arrangement[3]
+	const panDrums = ref(ARRANGEMENT[0])
+	const panBass = ref(ARRANGEMENT[1])
+	const panMelody = ref(ARRANGEMENT[2])
+	const panChords = ref(ARRANGEMENT[3])
 
 </script>
 

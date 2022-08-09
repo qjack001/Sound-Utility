@@ -1,12 +1,12 @@
 <template>
 	<input
+		:id="id"
 		type="radio"
 		name="chord-select"
-		:id="id"
 		:value="chord"
 		:checked="selected"
 		@change="select"
-	/>
+	>
 	<label :for="id">
 		{{ nameChord(chord, scale) }}<sup>{{ inversionToText(chord.inversion) }}</sup>
 	</label>
@@ -16,10 +16,10 @@
 	import { Chord, nameChord, inversionToText, Scale } from '@/scripts/music-theory'
 
 	defineProps<{
-		chord: Chord,
-		scale: Scale,
-		selected: boolean,
-		id: string,
+		chord: Chord
+		scale: Scale
+		selected: boolean
+		id: string
 		select: () => void
 	}>()
 </script>

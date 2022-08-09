@@ -1,4 +1,10 @@
 {
+	"editor.formatOnSave": false,
+	"eslint.validate": ["vue", "javascript", "typescript"],
+	"eslint.packageManager": "pnpm",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true,
+	},
 	"files.exclude": {
 		"**/.git": true,
 		".gitignore": true,
@@ -11,6 +17,7 @@
 		".nuxt": true,
 		"tsconfig.json": true,
 		"nuxt.config.ts": true,
+		".eslintrc": true,
 		".vscode": true,
 	},
 	"editor.tokenColorCustomizations": {

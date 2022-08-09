@@ -1,38 +1,53 @@
 <template>
 	<div class="options">
-		<template v-for="(bpmOption, index) in ALL_BPM_OPTIONS">
+		<template v-for="(bpmOption, index) in ALL_BPM_OPTIONS" :key="bpmOption">
 			<input
+				:id="`bpm-option-${bpmOption}`"
 				type="radio"
 				name="bpm"
 				:value="bpm"
-				:id="`bpm-option-${bpmOption}`"
 				:checked="bpmOption == bpm"
-				@change="emit('update:bpm', bpmOption)"
+				:class="{ 'alternate': (index % 2 != 0) }"
 
-				:class="{'alternate': (index % 2 != 0)}"
-			/>
+				@change="emit('update:bpm', bpmOption)"
+			>
 			<label
 				:for="`bpm-option-${bpmOption}`"
-				:class="{'alternate': (index % 2 == 0)}"
-
+				:class="{ 'alternate': (index % 2 == 0) }"
 			>
 				{{ bpmOption }}
 			</label>
 		</template>
-		<p id="largo" class="tempo-name">Largo</p>
-		<p id="larghetto" class="tempo-name">Larghetto</p>
-		<p id="adagio" class="tempo-name">Adagio</p>
-		<p id="andante" class="tempo-name">Andante</p>
-		<p id="moderato" class="tempo-name">Moderato</p>
-		<p id="allegro" class="tempo-name">Allegro</p>
-		<p id="vivace" class="tempo-name">Vivace</p>
-		<p id="presto" class="tempo-name">Presto</p>
+		<p id="largo" class="tempo-name">
+			Largo
+		</p>
+		<p id="larghetto" class="tempo-name">
+			Larghetto
+		</p>
+		<p id="adagio" class="tempo-name">
+			Adagio
+		</p>
+		<p id="andante" class="tempo-name">
+			Andante
+		</p>
+		<p id="moderato" class="tempo-name">
+			Moderato
+		</p>
+		<p id="allegro" class="tempo-name">
+			Allegro
+		</p>
+		<p id="vivace" class="tempo-name">
+			Vivace
+		</p>
+		<p id="presto" class="tempo-name">
+			Presto
+		</p>
 	</div>
 </template>
 
 <script setup lang="ts">
 	defineProps<{ bpm: number }>()
-	const emit = defineEmits(['update:bpm'])
+	const emit = defineEmits([ 'update:bpm' ])
 
 	const ALL_BPM_OPTIONS = [
 		40, 42, 44, 46, 48, 50, 52, 54, 56, 58, // Largo
@@ -42,7 +57,7 @@
 		108, 112, 116, 120,                     // Moderato
 		126, 132, 138, 144, 152,                // Allegro
 		160, 168, 176,                          // Vivace
-		184, 192, 200, 208                      // Presto
+		184, 192, 200, 208,                      // Presto
 	]
 </script>
 

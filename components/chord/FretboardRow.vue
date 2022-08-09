@@ -1,15 +1,15 @@
 <template>
 	<template v-for="index in length" :key="index">
 		<input
+			:id="`fretboard-row-${name}-${index}`"
 			type="radio"
 			class="fret"
 			:name="`fretboard-row-${name}`"
 			:value="index - 1"
-			:id="`fretboard-row-${name}-${index}`"
 			:aria-label="`${name}, fret ${index}`" 
 			:checked="isChecked(index - 1 + offset)"
 			@change="select(index - 1)"
-		/>
+		>
 		<label 
 			:for="`fretboard-row-${name}-${index}`"
 			:class="{
@@ -21,9 +21,7 @@
 				'below': (below == index - 1),
 			}"
 		>
-		{{
-			nameNote(index - 1 + offset)
-		}}
+			{{ nameNote(index - 1 + offset) }}
 		</label>
 	</template>
 </template>
@@ -31,20 +29,20 @@
 <script setup lang="ts">
 	import { Scale, Relation, isInScale, isRoot, chordNumber, toRomanNumeral, chordNumberIsMajor, relation, shortHand } from '@/scripts/music-theory'
 
-	export type Choice = { note: number, index: number }
+	export interface Choice { note: number, index: number }
 
 	const props = withDefaults(defineProps<{
-		name: string,
-		scale: Scale,
-		length?: number,
-		isBase: boolean,
-		offset?: number,
-		above?: number,
-		below?: number,
-		selected?: number,
-		onChange: (selection: Choice) => void,
-		rootNote?: number,
-		rootIndex?: number,
+		name: string
+		scale: Scale
+		length?: number
+		isBase: boolean
+		offset?: number
+		above?: number
+		below?: number
+		selected?: number
+		onChange: (selection: Choice) => void
+		rootNote?: number
+		rootIndex?: number
 	}>(), {
 		offset: 0,
 		length: 25,
@@ -57,7 +55,7 @@
 	const select = (index: number) => {
 		props.onChange({
 			note: index + props.offset,
-			index: index
+			index: index,
 		})
 	}
 
